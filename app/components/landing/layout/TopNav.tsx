@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link' // Next.js routing link
 
 const navItems = [
@@ -94,18 +94,18 @@ export default function TopNav() {
     setProfileMenuOpen(false)
   }
 
-  const linkClass = "no-underline text-white font-normal text-[15px] tracking-[0.2px] relative px-[6px] py-[8px] font-[var(--font-body)] cursor-pointer"
+  const linkClass =
+    "no-underline text-white font-normal text-[15px] tracking-[0.2px] relative px-[6px] py-[8px] cursor-pointer font-[family-name:var(--secondary-font)] after:content-[''] after:absolute after:left-[6px] after:right-[6px] after:bottom-[2px] after:h-px after:bg-[rgb(var(--brand-cyan))] after:scale-x-0 after:origin-center after:transition-transform after:duration-150 after:ease-in-out hover:after:scale-x-100"
+  const dropdownItem =
+    "no-underline border-0 rounded-lg bg-transparent text-white/90 px-2.5 py-2.5 text-[13px] text-left cursor-pointer hover:bg-white/10"
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50">
-      <div className="max-w-300 mx-auto flex items-center justify-between gap-4 
-          bg-[rgba(10,14,20,0.6)] border border-[rgba(255,255,255,0.14)] 
-          rounded-[20px] shadow-[0_18px_60px_rgba(0,0,0,0.25)] 
-          backdrop-blur-[14px] p-[14px_18px]">
+    <header className="fixed top-0 left-0 right-0 z-50 px-5 py-[18px]">
+      <div className="max-w-[1200px] mx-auto flex items-center justify-between gap-4 bg-[rgba(10,14,20,0.6)] border border-[rgba(255,255,255,0.14)] rounded-[20px] shadow-[0_18px_60px_rgba(0,0,0,0.25)] backdrop-blur-[14px] p-[14px_18px]">
 
         {/* to be replaced with logo*/} 
         <Link
-          className="font-bold tracking-[0.3px] no-underline text-[rgba(255,255,255,0.92)] text-[20px] whitespace-nowrap font-[var(--font-display)]"
+          className="font-[family-name:var(--primary-font)] font-bold tracking-[0.3px] no-underline text-[rgba(255,255,255,0.92)] text-[20px] whitespace-nowrap"
           href="#heroSection"
           aria-label="BeachResort home"
           onClick={(event) => onNavigateTo(event, 'heroSection')}
@@ -113,7 +113,7 @@ export default function TopNav() {
           MuniMuni
         </Link>
 
-        <nav className="navLinks" aria-label="Primary navigation">
+        <nav className="flex items-center justify-center gap-7 flex-1 max-[860px]:hidden" aria-label="Primary navigation">
           {/* Render navigation links for smooth scrolling to in-page sections */}
           {navItems.map((item) => (
             <a
@@ -131,65 +131,9 @@ export default function TopNav() {
         </nav>
 
         {/* Profile menu, Book Now button, and mobile menu button */}
-        <div className="navActions">
-          {/* Profile menu with conditional rendering based on authentication state */}
-          <div className="profileMenuWrap" ref={profileMenuRef}>
-            <button
-              type="button"
-              className="profileFabButton"
-              aria-label="Open profile menu"
-              aria-haspopup="menu"
-              aria-expanded={profileMenuOpen}
-              onClick={() => {
-                setProfileMenuOpen((prev) => !prev)
-                setMenuOpen(false)
-              }}
-            >
-              {/* {customerInitials} */}
-            </button>
-
-            {/* Dropdown menu for profile actions, conditionally rendered based on authentication state */}  
-            {profileMenuOpen ? (
-              <div className="profileDropdownMenu" role="menu" aria-label="Profile menu">
-                {true ? (
-                  <>
-                    <p className="profileDropdownTitle">{"test"}</p>
-                    <Link
-                      href="/customer/history"
-                      className="profileDropdownLink"
-                      role="menuitem"
-                      onClick={() => setProfileMenuOpen(false)}
-                    >
-                      History & Receipts
-                    </Link>
-                    <Link
-                      href="/customer/dashboard"
-                      className="profileDropdownLink"
-                      role="menuitem"
-                      onClick={() => setProfileMenuOpen(false)}
-                    >
-                      Dashboard
-                    </Link>
-                    <button type="button" className="profileDropdownButton" role="menuitem" onClick={handleSignOut}>
-                      Sign Out
-                    </button>
-                  </>
-                ) : (
-                  <Link
-                    href="/customer/login"
-                    className="profileDropdownLink"
-                    role="menuitem"
-                    onClick={() => setProfileMenuOpen(false)}
-                  >
-                    Sign In
-                  </Link>
-                )}
-              </div>
-            ) : null}
-          </div>
-
+        <div className="flex items-center gap-3">
           <Link
-            className="bookNowBtn"
+            className="inline-flex items-center justify-center px-4 py-2.5 rounded-[10px] font-normal tracking-[0.2px] text-white/95 bg-[rgb(var(--brand-cyan))] shadow-[0_14px_40px_rgba(var(--brand-cyan),0.18)] transition duration-150 ease-in-out hover:-translate-y-[1px] hover:shadow-[0_18px_52px_rgba(var(--brand-cyan),0.26)] font-[family-name:var(--secondary-font)]"
             href="/packages"
           >
             Book Here
@@ -198,7 +142,7 @@ export default function TopNav() {
           {/* Mobile menu button, visible on smaller screens */}
           <button
             type="button"
-            className="menuButton"
+            className="hidden max-[860px]:inline-flex items-center justify-center border border-white/20 bg-black/20 text-white/90 rounded-[10px] px-3 py-2 cursor-pointer font-[family-name:var(--secondary-font)]"
             ref={menuButtonRef}
             aria-label="Open menu"
             aria-expanded={menuOpen}
@@ -207,10 +151,10 @@ export default function TopNav() {
               setProfileMenuOpen(false)
             }}
           >
-            <span className="menuIcon" aria-hidden="true">
-              <span />
-              <span />
-              <span />
+            <span className="inline-flex flex-col gap-1" aria-hidden="true">
+              <span className="w-[18px] h-[2px] bg-white/90 rounded-sm" />
+              <span className="w-[18px] h-[2px] bg-white/90 rounded-sm" />
+              <span className="w-[18px] h-[2px] bg-white/90 rounded-sm" />
             </span>
           </button>
         </div>
@@ -218,13 +162,13 @@ export default function TopNav() {
 
       {/* Mobile menu, conditionally rendered based on menuOpen state */}
       {menuOpen && (
-        <div className="mobileMenu" ref={mobileMenuRef} role="dialog" aria-label="Mobile menu">
-          <div className="mobileMenuInner">
+        <div className="absolute top-[calc(100%-6px)] left-5 right-5 mx-auto z-[60] max-w-[1200px]" ref={mobileMenuRef} role="dialog" aria-label="Mobile menu">
+          <div className="bg-[rgba(10,14,20,0.52)] border border-white/15 rounded-[18px] backdrop-blur-[16px] shadow-[0_26px_80px_rgba(0,0,0,0.35)] p-[14px] flex flex-col gap-[10px]">
             {navItems.map((item) => (
               <button
                 type="button"
                 key={item.targetId}
-                className="mobileNavLink"
+                className="no-underline text-white/80 font-normal p-3 rounded-[14px] bg-white/5 font-[family-name:var(--secondary-font)] border-0 w-full text-left cursor-pointer hover:bg-white/10"
                 onClick={(e) => onNavigateTo(e, item.targetId)}
               >
                 {item.label}
@@ -232,7 +176,7 @@ export default function TopNav() {
             ))}
             <Link
               href="/packages"
-              className="mobileBookNow"
+              className="no-underline font-semibold text-white/95 p-3 rounded-[10px] bg-[rgb(var(--brand-cyan))] font-[family-name:var(--secondary-font)]"
               onClick={onMobileBookNowClick}
             >
               Book Here
