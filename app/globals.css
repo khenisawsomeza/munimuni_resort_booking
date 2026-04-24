@@ -3,6 +3,9 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --brand-cyan: 0, 169, 216;
+  --brand-sand: #e8d7b7
+  --brand-soft-sand: #f8f6ed;
 }
 
 @theme inline {
